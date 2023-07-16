@@ -1,0 +1,117 @@
+﻿@*@model List<Product>
+
+<div class="container">
+	<div class="row pt-4 pb-3">
+		<div class="col-6">
+			<h1 class="text-primary">Product List</h1>
+		</div>
+		<div class="col-6 text-end">
+			<a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+				<i class="bi bi-plus-circle"></i> Create New Product
+			</a>
+		</div>
+
+	</div>
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		@foreach (var product in Model)
+		{
+			<div class="col" >
+				<div class="card" >
+					@if (!string.IsNullOrEmpty(product.ImageUrl))
+					{
+						<img src="@product.ImageUrl" class="card-img-top" alt="Product Image">
+					}
+					<div class="card-body">
+						<h5 class="card-title">@product.Title</h5>
+						<p class="card-text">
+							ISBN: @product.ISBN<br />
+							Price: @product.Price<br />
+							Author: @product.Author<br />
+							Category: @product.Category.Name
+						</p>
+						<div class="btn-group" role="group">
+							<a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary">
+								<i class="bi bi-pencil-square"></i> Edit
+							</a>
+							<a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">
+								<i class="bi bi-trash3"></i> Delete
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+*@
+
+
+
+@model IEnumerable<Product>
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+	<div class="row pt-4 pb-3">
+		<div class="col-6">
+			<h1 class="text-primary">Product List</h1>
+		</div>
+		<div class="col-6 text-end">
+			<a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+				<i class="bi bi-plus-circle"></i> Create New Product
+			</a>
+		</div>
+	</div>
+
+	<div class="row pb-3">
+		@foreach (var product in Model)
+		{
+			<div class="col-lg-3 col-sm-6">
+				<div class="row p-2">
+					<div class="col-12 p-1">
+						<div class="card border-0 p-3 shadow border-top border-5 rounded">
+							<img src="@product.ImageUrl" class="card-img-top rounded" />
+							<div class="card-body pb-0">
+								<div class="pl-1">
+									<p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@product.Title</p>
+									<p class="cardcard-title text-warning text-center ">by <b>@product.Author</b></p>
+								</div>
+								<div class="pl-1">
+									<p class="text-dark text-opacity-75 text-center mb-0">
+										List Price:
+										<span class="text-decoration-line-through">
+											@product.ListPrice.ToString("c")
+										</span>
+									</p>
+								</div>
+								<div class="pl-1">
+									<p class="text-dark text-opacity-75 text-center">
+										As low as:
+										<span>
+											@product.Price100.ToString("c")
+										</span>
+									</p>
+								</div>
+							</div>
+							@*<div>
+						<a asp-action="Details" asp-route-productId="@product.Id"
+						class="btn btn-primary bg-gradient border-0 form-control">
+						Details
+						</a>
+						</div>*@
+							<div class="btn-group p-1" role="group">
+								<a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary">
+									<i class="bi bi-pencil-square"></i>
+								</a>
+								<a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">
+									<i class="bi bi-trash3"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
