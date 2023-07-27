@@ -1,0 +1,38 @@
+﻿@model User
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="text-primary text-center">Login</h2>
+            <div asp-validation-summary="ModelOnly"></div>
+            <hr />
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3 row p-1">
+                    <label for="username" class="p-0">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" />
+                </div>
+                <div class="mb-3 row p-1">
+                    <label for="password" class="p-0">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" />
+                </div>
+                <div class="mb-3 row p-1">
+                    <label for="password" class="p-0">
+                        <input type="checkbox"  asp-for="KeepLoggedIn" />
+                        Keep me LoggedIn.
+                    </label>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary form-control">Login</button>
+                    </div>
+                    <div class="col-md-8">
+                        <a asp-controller="User" asp-action="Register"  class="btn btn-secondary border form-control">
+                            Don't have an account ?<span class="" style="color:red"> Register</span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -14,7 +16,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
 			<div class="container-fluid">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PageTurnner</a>
+				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BOOKMART</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -27,19 +29,26 @@
 						<li class="nav-item">
 							<a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 						</li>
-						@*<li class="nav-item">
-							<a class="nav-link " asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link " asp-area="" asp-controller="Product" asp-action="Index">Product</a>
-						</li>*@
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" data-ol-has-click-handler="">Content Management</a>
-							<ul class="dropdown-menu" >
-								<a class="dropdown-item" class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-								<a class="dropdown-item" class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
-							</ul>
-						</li>
+						
+						@if (User.Identity.IsAuthenticated)
+						{
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" data-ol-has-click-handler="">Content Management</a>
+								<ul class="dropdown-menu">
+									<a class="dropdown-item" class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+									<a class="dropdown-item" class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+								</ul>
+							</li>
+						}
+						@if (User.Identity.IsAuthenticated)
+						{
+						
+							<li class="nav-item d-flex ms-auto ">
+								<a class="nav-link " asp-controller="Home" asp-action="Logout">Logout</a>
+							</li>
+						}
+						
+					
 					</ul>
 				</div>
 			</div>
@@ -54,7 +63,7 @@
 
 	<footer class="border-top footer text-muted bg-primary">
 		<div class="container text-white text-center">
-			&copy; 2023 - Made with <i style="color: #FF6666" class="bi bi-heart-fill "></i> by Harshal Jamdade  <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+			&copy; 2023 - Made with <i style="color: #FF6666" class="bi bi-heart-fill "></i> by Harshal Jamdade  
 		</div>
 	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>

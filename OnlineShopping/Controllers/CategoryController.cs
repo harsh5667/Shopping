@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OnlineShopping.Data;
 using OnlineShopping.Models;
 
 namespace OnlineShopping.Controllers
 {
+	[Authorize]
 	public class CategoryController : Controller
 	{
 		private readonly ShoppingDbContext _db;

@@ -12,6 +12,7 @@ namespace OnlineShopping.Data
 		public DbSet<Category> Categories { get; set; }
 
 		public DbSet<Product> Products { get; set; }
+		public DbSet<User> Users { get; set; }
 		// Added seeds data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

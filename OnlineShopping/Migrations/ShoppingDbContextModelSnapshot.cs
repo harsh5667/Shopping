@@ -190,6 +190,28 @@ namespace OnlineShopping.Migrations
                         });
                 });
 
+            modelBuilder.Entity("OnlineShopping.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("KeepLoggedIn")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("OnlineShopping.Models.Product", b =>
                 {
                     b.HasOne("OnlineShopping.Models.Category", "Category")
