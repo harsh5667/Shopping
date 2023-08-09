@@ -72,7 +72,8 @@ namespace OnlineShopping.Controllers
 					};
 
 					await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-						new ClaimsPrincipal(identity),properties);
+						new ClaimsPrincipal(identity), properties);
+					
 					// Redirect to a secured page or dashboard after successful login.
 
 					return RedirectToAction("Index", "Home");

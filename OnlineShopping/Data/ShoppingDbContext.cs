@@ -13,6 +13,7 @@ namespace OnlineShopping.Data
 
 		public DbSet<Product> Products { get; set; }
 		public DbSet<User> Users { get; set; }
+		public DbSet<CartItems> CartItems { get; set; }
 		// Added seeds data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

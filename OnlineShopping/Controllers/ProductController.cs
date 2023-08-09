@@ -23,16 +23,36 @@ namespace OnlineShopping.Controllers
 
 		}
 
-		public IActionResult Index()
+		//public IActionResult Index()
+		//{
+
+		//	List<Product> productsList  = _db.Products.Include(p => p.Category).ToList();
+
+		//	var category_List = _db.Categories.Select(p=>p).Distinct().ToList();
+		//	ViewBag.Category_List = category_List;
+
+		//	return View(productsList);
+
+
+
+		//}
+		public IActionResult Index(BookFilterModel filter)
 		{
+			var productsList = _db.Products.Include(p => p.Category).ToList();
+			var category_List = _db.Categories.Select(p => p).Distinct().ToList();
+
+
+			ViewBag.category_List = category_List;
+
+			if (filter.CategoryId.HasValue && filter.CategoryId!=0)
+			{
+				productsList = productsList.Where(book => book.CategoryId == filter.CategoryId).ToList();
+			}
 			
-			List<Product> productsList  = _db.Products.Include(p => p.Category).ToList();
+			Console.WriteLine(category_List);
 			return View(productsList);
 
-			
-			
 		}
-
 		public IActionResult Create()
 		{
 			IEnumerable<SelectListItem> categoryList = _db.Categories.Select(c => new SelectListItem
@@ -41,7 +61,9 @@ namespace OnlineShopping.Controllers
 				Value = c.Id.ToString()
 			});
 			Console.WriteLine(categoryList);
+
 			ViewBag.CategoryList = categoryList;
+
 			return View();
 		}
 
@@ -210,6 +232,24 @@ namespace OnlineShopping.Controllers
 			_db.SaveChanges();
 			TempData["Success"] = "Data Deleted Successfully!";
 			return RedirectToAction("Index");
+		}
+
+
+		public IActionResult Details(int? id)
+		{
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+
+			Product? productFromDb = _db.Products.Find(id);
+
+			if (productFromDb == null)
+			{
+				return NotFound();
+			}
+
+			return View(productFromDb);
 		}
 	}
 }

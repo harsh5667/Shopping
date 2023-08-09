@@ -1,0 +1,98 @@
+﻿@model List<CartItems>
+@{
+	decimal totalAmount = 0;
+}
+@foreach(var item in Model)
+{
+	totalAmount += (item.Quantity) * (Convert.ToInt32(ViewBag.ProductList[item.ProductId][2]));
+}
+<style>
+	input[type=number]::-webkit-inner-spin-button,
+	input[type=number]::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		margin: 0;
+	}
+
+	.cart-table th{
+		text-align:center;
+		vertical-align:center;
+	}
+
+	.cart-table td {
+		text-align: center;
+		vertical-align: center;
+	}
+
+	.cart-table .product-name {
+		font-weight:bold !important;
+	}
+
+	.quantity-input{
+		text-align:center;
+	}
+
+	.q-button{
+		
+	}
+
+	
+</style>
+<script>
+	function increasequantity(button) {
+		var input = button.parentElement.querySelector('input[type="number"]');
+		input.value = parseInt(input.value) + 1
+	}
+
+	function decreasequantity(button) {
+		var input = button.parentElement.querySelector('input[type="number"]');
+		if (parseInt(input.value)>1) {
+			input.value = parseInt(input.value) - 1
+		}
+		
+	}
+</script>
+<h1>Cart</h1>
+
+<table class="table cart-table">
+	<thead>
+		<tr>
+			<th>Image</th>
+			<th>Product</th>
+			<th>Quantity</th>
+			<th>Price</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td><img src="@ViewBag.ProductList[item.ProductId][1]" height="100" width="80" /></td>
+				<td class="product-name">@ViewBag.ProductList[item.ProductId][0]</td>
+				<td>
+					<form asp-controller="Cart" asp-action="UpdateQuantity" method="post">
+						<input type="hidden" name="itemId" value="@item.Id" />
+						@*<button class="q-button" type="button" onclick="decreasequantity(this)">-</button>*@
+						<a class=" btn-danger" onclick="decreasequantity(this)"><i class="bi bi-dash-circle-fill"></i></a>
+						<input  class="quantity-input" type="number" name="quantity" value="@item.Quantity" min="1" width="20px"/>
+						@*<button type="button" onclick="increasequantity(this)"><i class="bi bi-plus-circle-fill"></i></button>*@
+						<a class=" btn-danger"  onclick="increasequantity(this)"><i class="bi bi-plus-circle-fill"></i></a>
+						<button type="submit"><i class="bi bi-pencil-square"></i></button>
+					</form>
+				</td>
+				<td>@(item.Quantity * Convert.ToInt32(ViewBag.ProductList[item.ProductId][2])) Rs</td>
+				<td>
+					<a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@item.Id"><i class="bi bi-trash3"></i></a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<div>
+	<h3>Total Amount - @totalAmount</h3>
+</div>
+
+

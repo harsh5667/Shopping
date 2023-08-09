@@ -18,7 +18,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 	.AddCookie(options =>
 	{
 		options.LoginPath = "/User/Login"; // Set the login page URL here
-		options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+		options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
 	});
 
 // Add the session services with the MemorySessionStore

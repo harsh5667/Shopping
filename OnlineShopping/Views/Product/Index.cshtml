@@ -1,63 +1,35 @@
-﻿@*@model List<Product>
-
-<div class="container">
-	<div class="row pt-4 pb-3">
-		<div class="col-6">
-			<h1 class="text-primary">Product List</h1>
-		</div>
-		<div class="col-6 text-end">
-			<a asp-controller="Product" asp-action="Create" class="btn btn-primary">
-				<i class="bi bi-plus-circle"></i> Create New Product
-			</a>
-		</div>
-
-	</div>
-	<div class="row row-cols-1 row-cols-md-3 g-4">
-		@foreach (var product in Model)
-		{
-			<div class="col" >
-				<div class="card" >
-					@if (!string.IsNullOrEmpty(product.ImageUrl))
-					{
-						<img src="@product.ImageUrl" class="card-img-top" alt="Product Image">
-					}
-					<div class="card-body">
-						<h5 class="card-title">@product.Title</h5>
-						<p class="card-text">
-							ISBN: @product.ISBN<br />
-							Price: @product.Price<br />
-							Author: @product.Author<br />
-							Category: @product.Category.Name
-						</p>
-						<div class="btn-group" role="group">
-							<a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary">
-								<i class="bi bi-pencil-square"></i> Edit
-							</a>
-							<a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">
-								<i class="bi bi-trash3"></i> Delete
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		}
-	</div>
-</div>
-*@
-
-
-
-@model IEnumerable<Product>
+﻿@model IEnumerable<Product>
 @{
 	ViewData["Title"] = "Home Page";
 }
 
 <div class="container">
 	<div class="row pt-4 pb-3">
-		<div class="col-6">
+		<div class="col-4">
 			<h1 class="text-primary">Book List</h1>
 		</div>
-		<div class="col-6 text-end">
+		<script>
+			function filterByCategory(SelectElement){
+
+			}
+		</script>
+		<div class="col-4">
+			@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+			{
+
+				<select name="CategoryId" id="CategoryId" >
+					<option value="">All</option>
+					@foreach (var category in ViewBag.Category_List)
+					{
+
+						<option value="@category.Id" >@category.Name</option>
+					}
+				</select>
+				<button>Submit</button>
+			}
+		</div>
+
+		<div class="col-4 ">
 			<a asp-controller="Product" asp-action="Create" class="btn btn-primary">
 				<i class="bi bi-plus-circle"></i> Create New Product
 			</a>
@@ -71,10 +43,15 @@
 				<div class="row p-2">
 					<div class="col-12 p-1">
 						<div class="card border-0 p-3 shadow border-top border-5 rounded">
-							<img src="@product.ImageUrl" class="card-img-top rounded" />
+							<a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
+								<img src="@product.ImageUrl" class="card-img-top rounded" />
+							</a>
+
 							<div class="card-body pb-0">
 								<div class="pl-1">
-									<p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@product.Title</p>
+									<a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" style="text-decoration:none">
+										<p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@product.Title</p>
+									</a>
 									<p class="cardcard-title text-warning text-center ">by <b>@product.Author</b></p>
 								</div>
 								<div class="pl-1">
@@ -94,12 +71,7 @@
 									</p>
 								</div>
 							</div>
-							@*<div>
-						<a asp-action="Details" asp-route-productId="@product.Id"
-						class="btn btn-primary bg-gradient border-0 form-control">
-						Details
-						</a>
-						</div>*@
+
 							<div class="btn-group p-1" role="group">
 								<a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary">
 									<i class="bi bi-pencil-square"></i>
@@ -107,7 +79,22 @@
 								<a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">
 									<i class="bi bi-trash3"></i>
 								</a>
+								
 							</div>
+							<form method="post" asp-controller="Cart" asp-action="AddtoCart">
+								<input type="hidden" name="productId" value="@product.Id" />
+								<div class="input-group">
+									<input type="number" name="quantity" value="1" min="1" />
+									<button class="input-group-text" type="button" onclick="increasequantity(this)">+</button>
+								</div>
+								<button type="submit">Add to Cart</button>
+							</form>
+							<script>
+								function increasequantity(button){
+									var input=button.parentElement.querySelector('input[type="number"]');
+									input.value=parseInt(input.value)+1
+								}
+							</script>
 						</div>
 					</div>
 				</div>

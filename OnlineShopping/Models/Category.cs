@@ -5,7 +5,9 @@ namespace OnlineShopping.Models
 {
     public class Category
     {
-        [Key]
+		internal readonly object categoryId;
+
+		[Key]
         public int Id { get; set; }
         [Required]
         [MaxLength(30)]
