@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using OnlineShopping.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//we are testing for git
+//second comment for new branch
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
